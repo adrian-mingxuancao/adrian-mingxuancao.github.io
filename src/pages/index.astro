@@ -16,8 +16,8 @@ const posts = await getCollection("blog");
 const sortedPosts = posts
   .filter(({ data }) => !data.draft)
   .sort((a, b) =>
-    new Date(b.data.pubDatetime ?? b.data.updatedDate ?? 0).getTime() -
-    new Date(a.data.pubDatetime ?? a.data.updatedDate ?? 0).getTime()
+    new Date(b.data.modDatetime ?? b.data.pubDatetime ?? 0).getTime() -
+    new Date(a.data.modDatetime ?? a.data.pubDatetime ?? 0).getTime()
   );
 
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
