@@ -1,5 +1,5 @@
 import { defineConfig, envField } from "astro/config";
-import netlify from "@astrojs/netlify/static";  // ✅ static adapter
+// GitHub Pages: use Astro's default static output (no adapter needed)
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
@@ -14,8 +14,8 @@ import { SITE } from "./src/config";
 
 export default defineConfig({
   site: SITE.website,
-  adapter: netlify(),                // ✅ add adapter
-  // output: 'server',               // ❌ not needed for static
+  // adapter: netlify(), // Not needed for GitHub Pages (static build)
+  // output: 'server',   // Not needed for static
   integrations: [
     sitemap({ filter: (page) => SITE.showArchives || !page.endsWith("/archives") }),
   ],
