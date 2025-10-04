@@ -1,4 +1,5 @@
 import { defineConfig, envField } from "astro/config";
+import netlify from "@astrojs/netlify/static";  // ✅ static adapter
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
@@ -11,18 +12,16 @@ import {
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
 
-// https://astro.build/config
 export default defineConfig({
   site: SITE.website,
+  adapter: netlify(),                // ✅ add adapter
+  // output: 'server',               // ❌ not needed for static
   integrations: [
-    sitemap({
-      filter: page => SITE.showArchives || !page.endsWith("/archives"),
-    }),
+    sitemap({ filter: (page) => SITE.showArchives || !page.endsWith("/archives") }),
   ],
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
     shikiConfig: {
-      // For more themes, visit https://shiki.style/themes
       themes: { light: "min-light", dark: "night-owl" },
       defaultColor: false,
       wrap: false,
@@ -35,29 +34,17 @@ export default defineConfig({
     },
   },
   vite: {
-    // eslint-disable-next-line
-    // @ts-ignore
-    // This will be fixed in Astro 6 with Vite 7 support
-    // See: https://github.com/withastro/astro/issues/14030
+    // @ts-ignore — Astro 6 will fix
     plugins: [tailwindcss()],
-    optimizeDeps: {
-      exclude: ["@resvg/resvg-js"],
-    },
+    optimizeDeps: { exclude: ["@resvg/resvg-js"] },
   },
-  image: {
-    responsiveStyles: true,
-    layout: "constrained",
-  },
+  image: { responsiveStyles: true, layout: "constrained" },
   env: {
     schema: {
       PUBLIC_GOOGLE_SITE_VERIFICATION: envField.string({
-        access: "public",
-        context: "client",
-        optional: true,
+        access: "public", context: "client", optional: true,
       }),
     },
   },
-  experimental: {
-    preserveScriptOrder: true,
-  },
+  experimental: { preserveScriptOrder: true },
 });
