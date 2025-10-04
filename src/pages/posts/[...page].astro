@@ -5,8 +5,7 @@ import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Card from "@/components/Card.astro";
-import Pagination from "@/components/Pagination.astro";
+// import Card from "@/components/Card.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
@@ -19,14 +18,49 @@ const { page } = Astro.props;
 ---
 
 <Layout title={`Posts | ${SITE.title}`}>
-  <Header />
-  <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
-    <ul>
-      {page.data.map(data => <Card {...data} />)}
-    </ul>
-  </Main>
+  <!-- full-height column to push footer to bottom -->
+  <div class="min-h-screen flex flex-col">
+    <Header />
 
-  <Pagination {page} />
+    <Main
+      pageTitle="Blog"
+      pageDesc="Right now there's one Generative Genomics blog hosted externally."
+    >
+      <ul class="divide-y divide-foreground/10">
+        <li class="py-6">
+          <article class="space-y-2">
+            <!-- Title (colored link, AstroPaper-like list item) -->
+            <h2 class="text-2xl font-semibold tracking-tight">
+              <a
+                href="https://adrian-mingxuancao.github.io/adrian-blog/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary hover:text-accent/80 hover:border-b-2 hover:border-dashed hover:border-accent hover:pb-1 transition-all"
+                aria-label="Open Generative Genomics blog"
+                title="Open Generative Genomics blog"
+              >
+                Generative Genomics Blog
+              </a>
+            </h2>
 
-  <Footer noMarginTop={page.lastPage > 1} />
+            <!-- Updated date -->
+            <div class="text-sm text-foreground/60">
+              Updated: 27 Sept, 2025
+            </div>
+
+            <!-- Short description -->
+            <p class="text-foreground/80">
+              Exploring the intersection of genomics, generative modeling, and bioinformatics.
+            </p>
+          </article>
+        </li>
+      </ul>
+    </Main>
+
+    <!-- spacer pushes footer to bottom -->
+    <div class="flex-1"></div>
+
+    <!-- keep footer; no pagination -->
+    <Footer />
+  </div>
 </Layout>

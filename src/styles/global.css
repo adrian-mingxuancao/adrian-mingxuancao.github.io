@@ -3,21 +3,27 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* ------------------------
+   Color tokens (Zen–Cyberpunk)
+   ------------------------ */
+
 :root,
 html[data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --border: #ece9e9;
+  /* paper + ink + plum accent */
+  --background: #fbfafc;         /* soft off-white with a hint of lilac */
+  --foreground: #232229;         /* charcoal/ink */
+  --accent: #7c5cff;             /* zen purple (calm, not too neon) */
+  --muted: #e9e6f4;              /* lavender grey for subtle surfaces */
+  --border: #e8e3f1;             /* quiet border */
 }
 
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60;
-  --border: #ab4b08;
+  /* indigo night + neon ember accent */
+  --background: #161a26;         /* deep indigo/blue-black */
+  --foreground: #e9ecf6;         /* misty light */
+  --accent: #ff4fb2;             /* neon-magenta accent (controlled) */
+  --muted: #262c3f;              /* slate indigo panels */
+  --border: #3a4261;             /* cool border */
 }
 
 @theme inline {
@@ -28,42 +34,97 @@ html[data-theme="dark"] {
   --color-border: var(--border);
 }
 
+/* ------------------------
+   Global base
+   ------------------------ */
 @layer base {
   * {
     @apply border-border outline-accent/75;
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
+
   html {
     @apply overflow-y-scroll scroll-smooth;
   }
+
   body {
+    /* subtle zen grain + radial vignette; extremely low contrast */
+    background:
+      radial-gradient(1200px 600px at 20% -10%, color-mix(in srgb, var(--color-accent) 6%, transparent), transparent 60%),
+      radial-gradient(1200px 600px at 120% 110%, color-mix(in srgb, var(--color-accent) 5%, transparent), transparent 60%),
+      var(--color-background);
     @apply flex min-h-svh flex-col bg-background font-mono text-foreground selection:bg-accent/75 selection:text-background;
   }
+
+  a {
+    /* quiet by default, glow on hover/focus */
+    text-decoration-thickness: .08em;
+    text-underline-offset: .22em;
+    transition: text-decoration-color .2s ease, box-shadow .2s ease, color .2s ease;
+  }
+
+  a:hover {
+    color: color-mix(in srgb, var(--color-accent) 60%, var(--color-foreground));
+    text-decoration-color: color-mix(in srgb, var(--color-accent) 60%, transparent);
+  }
+
   a,
   button {
-    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+    @apply outline-offset-2 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+    /* soft cyberpunk glow ring */
+    box-shadow: 0 0 0px rgba(0,0,0,0);
   }
+
+  a:focus-visible,
+  button:focus-visible {
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent),
+      0 0 24px 2px color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
   section,
   footer {
     @apply mx-auto max-w-app px-4;
   }
 }
 
+/* ------------------------
+   Layout utilities
+   ------------------------ */
 @utility max-w-app {
   @apply max-w-3xl;
 }
 
+/* Active nav = subtle punk underline */
 .active-nav {
   @apply underline decoration-wavy decoration-2 underline-offset-4;
+  text-decoration-color: color-mix(in srgb, var(--color-accent) 70%, transparent);
 }
 
-/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
-/* Anything that has been anchored to should have extra scroll margin */
-:target {
-  scroll-margin-block: 1rem;
+/* Anchor scroll margin */
+:target { scroll-margin-block: 1rem; }
+
+/* ------------------------
+   Optional “glow” helpers
+   ------------------------ */
+.glow-border {
+  /* minimal neon edge for cards/panels */
+  box-shadow:
+    0 0 0 1px var(--color-border) inset,
+    0 0 24px color-mix(in srgb, var(--color-accent) 10%, transparent);
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--color-muted) 80%, transparent),
+      transparent);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
 }

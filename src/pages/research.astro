@@ -1,0 +1,67 @@
+---
+// File: /home/caom/my-site/src/pages/research.astro
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Main from "@/layouts/Main.astro";
+import { SITE } from "@/config";
+
+const pageTitle = "Research";
+const pageDesc = "My research work and publications in AI, statistics, and their applications in biology.";
+const items = [
+  {
+    title: "Monte Carlo Tree Diffusion with Multiple Experts for Protein Design (MCTD-ME)",
+    url: "https://arxiv.org/abs/2509.15796",
+    status: "Preprint (arXiv 2025) · In submission",
+    collaborators:
+      "with Xuefeng Liu, Songhao Jiang, Xiao Luo, Xiaotian Duan, Mengdi Wang, Tobin R. Sosnick, Jinbo Xu, Rick L. Stevens",
+    blurb:
+      "Reframes reverse diffusion as Monte Carlo Tree Search with multiple proposal experts; pLDDT-guided masking and uncertainty-aware selection improve protein design quality and efficiency.",
+  },
+  {
+    title:
+      "From Division to Unity: The Emergence of Computational Social Science (1990–2021)",
+    url: "https://arxiv.org/abs/2412.08087",
+    status: "WWW '25: Companion Proceedings of the ACM on Web Conference 2025",
+    collaborators: "with Honglin Bao, Jiawei Zhang, and James A. Evans",
+    blurb:
+      "Large-scale bibliometric/embedding analysis of CSS’s growth and integration across disciplines.",
+  },
+];
+---
+
+<Layout title={`${pageTitle} | ${SITE.title}`}>
+  <Header />
+
+  <Main {pageTitle} {pageDesc}>
+    <ul class="divide-y divide-foreground/10">
+      {items.map((it) => (
+        <li class="py-6">
+          <article class="space-y-2">
+            <h2 class="text-2xl font-semibold tracking-tight">
+              <a
+                href={it.url}
+                class="text-primary hover:text-accent/80 hover:border-b-2 hover:border-dashed hover:border-accent hover:pb-1 transition-all"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {it.title}
+              </a>
+            </h2>
+
+            <!-- Status line -->
+            <div class="text-sm text-foreground/60">{it.status}</div>
+
+            <!-- One-liner collaborators -->
+            <div class="text-sm text-foreground/70">{it.collaborators}</div>
+
+            <!-- Short optional blurb -->
+            {it.blurb && <p class="text-foreground/80">{it.blurb}</p>}
+          </article>
+        </li>
+      ))}
+    </ul>
+  </Main>
+
+  <Footer />
+</Layout>
