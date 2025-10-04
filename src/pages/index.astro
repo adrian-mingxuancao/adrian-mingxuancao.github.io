@@ -40,14 +40,14 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
            sm:[shape-margin:0.75rem]">
     <!-- Light -->
     <img
-      src={profileLight}
+      src={profileLight.src}
       alt="Portrait of Mingxuan (Adrian) Cao - Light Theme"
       width="144" height="144"
       class="h-28 w-28 rounded-2xl object-cover glow-border sm:h-80 sm:w-50 dark:hidden"
       loading="eager" decoding="async" />
     <!-- Dark -->
     <img
-      src={profileDark}
+      src={profileDark.src}
       alt="Portrait of Mingxuan (Adrian) Cao - Dark Theme"
       width="144" height="144"
       class="hidden h-28 w-28 rounded-2xl object-cover glow-border sm:h-80 sm:w-50 dark:block"
