@@ -34,7 +34,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       <div class="flex flex-col items-start gap-6 sm:[display:block]">
     <!-- Avatar (floats on ≥sm so text wraps) -->
     <figure
-    class="mb-3 sm:mb-2 sm:float-left sm:mr-8 sm:mt-1
+    class="mb-3 sm:mb-2 sm:float-left sm:mr-8 sm:mt-4
            sm:[shape-outside:inset(0_round_1rem)]
            sm:[clip-path:inset(0_round_1rem)]
            sm:[shape-margin:0.75rem]">
@@ -43,14 +43,14 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       src={profileLight.src}
       alt="Portrait of Mingxuan (Adrian) Cao - Light Theme"
       width="144" height="144"
-      class="h-28 w-28 rounded-2xl object-cover glow-border sm:h-96 sm:w-60 dark:hidden"
+      class="h-28 w-28 rounded-2xl object-cover glow-border sm:h-88 sm:w-55 dark:hidden"
       loading="eager" decoding="async" />
     <!-- Dark -->
     <img
       src={profileDark.src}
       alt="Portrait of Mingxuan (Adrian) Cao - Dark Theme"
       width="144" height="144"
-      class="hidden h-28 w-28 rounded-2xl object-cover glow-border sm:h-96 sm:w-60 dark:block"
+      class="hidden h-28 w-28 rounded-2xl object-cover glow-border sm:h-88 sm:w-55 dark:block"
       loading="eager" decoding="async" />
   </figure>
   
